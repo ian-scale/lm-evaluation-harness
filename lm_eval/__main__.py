@@ -301,7 +301,7 @@ def cli_evaluate(args: Union[argparse.Namespace, None] = None) -> None:
 
     if args.include_path is not None:
         eval_logger.info(f"Including path: {args.include_path}")
-    task_manager = TaskManager(args.verbosity, include_path=args.include_path)
+    task_manager = TaskManager(args.verbosity, include_path=args.include_path, trust_remote_code=args.trust_remote_code)
 
     if "push_samples_to_hub" in evaluation_tracker_args and not args.log_samples:
         eval_logger.warning(

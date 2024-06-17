@@ -19,11 +19,13 @@ class TaskManager:
         verbosity="INFO",
         include_path: Optional[Union[str, List]] = None,
         include_defaults: bool = True,
+        trust_remote_code: bool = False,
     ) -> None:
         self.verbosity = verbosity
         self.include_path = include_path
         self.logger = utils.eval_logger
         self.logger.setLevel(getattr(logging, f"{verbosity}"))
+        self.trust_remote_code = trust_remote_code
 
         self._task_index = self.initialize_tasks(
             include_path=include_path, include_defaults=include_defaults
@@ -164,6 +166,7 @@ class TaskManager:
                 task_object = config["class"]()
             else:
                 config = self._process_alias(config, group=group)
+                config["trust_remote_code"] = self.trust_remote_code
                 task_object = ConfigurableTask(config=config)
             if group is not None:
                 task_object = (group, task_object)
