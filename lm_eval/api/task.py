@@ -95,6 +95,7 @@ class TaskConfig(dict):
     metadata: Optional[dict] = (
         None  # by default, not used in the code. allows for users to pass arbitrary info to tasks
     )
+    trust_remote_code: bool = False
 
     def __post_init__(self) -> None:
         if self.generation_kwargs is not None:
